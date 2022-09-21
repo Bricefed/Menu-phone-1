@@ -1,3 +1,97 @@
 @import "./variables";
 @import "./reset";
+@import "./placeholder";
 
+nav {
+  position: relative;
+  @extend %displayCenterCenter;
+  width: 400px;
+  height: 70px;
+  background: white;
+  border-radius: 10px;
+
+  ul {
+    display: flex;
+    width: 350px;
+
+    li {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      z-index: 1;
+
+      &.active a {
+        .icon {
+          transform: translateY(-32px);
+          color: white;
+        }
+
+        .text {
+          opacity: 1;
+          transform: translateY(10px);
+        }
+      }
+
+      @for $i from 1 through 5 {
+        &:nth-child(#{$i}).active ~ .indicator {
+          transform: translateX(70px * $i - 70);
+        }
+      }
+
+      a {
+        position: relative;
+        @extend %displayCenterCenter;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        font-weight: 500;
+        
+        .icon {
+          position: relative;
+          display: block;
+          line-height: 75px;
+          font-size: 2.5rem;
+          text-align: center;
+          transition: .5s;
+          color: $black;
+        }
+
+        .text {
+          position: absolute;
+          color: $red;
+          font-weight: 700;
+          font-size: 1.2rem;
+          letter-spacing: .05rem;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: .5s;
+        }
+      }
+    }
+
+    .indicator {
+      position: absolute;
+      top: -50%;
+      width: 70px;
+      height: 70px;
+      background: $red;
+      border-radius: 50%;
+      border: 6px solid $black;
+      transition: .5s;
+
+      &::before {
+        @extend %beforeAfterEl;
+        left: -22px;
+        border-top-right-radius: 20px;
+        box-shadow: 1px -10px 0 0 $black;
+      }
+
+      &::after {
+        @extend %beforeAfterEl;
+        right: -22px;
+        border-top-left-radius: 20px;
+        box-shadow: -1px -10px 0 0 $black;
+      }
+    }
+  }
+}
